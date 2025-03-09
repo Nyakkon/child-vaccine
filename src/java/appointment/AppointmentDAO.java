@@ -242,8 +242,6 @@ public boolean updateAppointmentStatus(int appointmentID, String status) throws 
     }
 }
 
-<<<<<<< HEAD
-=======
  // 1. Lấy danh sách ngày hẹn, số mũi tiêm và doanh thu theo từng ngày
     public List<AppointmentStatisticsDTO> getAppointmentStatistics(int year) {
         List<AppointmentStatisticsDTO> stats = new ArrayList<>();
@@ -321,6 +319,5 @@ public boolean updateAppointmentStatus(int appointmentID, String status) throws 
         return revenue;
     }
 
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
 
 }

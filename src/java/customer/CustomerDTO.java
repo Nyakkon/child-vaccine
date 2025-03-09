@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package customer;
-
-/**
- *
- * @author windows
- */
-public class CustomerDTO {
-
-=======
 package customer;
 
 import java.io.Serializable;
@@ -21,7 +6,6 @@ public class CustomerDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
     private String userID;
     private String password;
     private String roleID;
@@ -50,11 +34,6 @@ public class CustomerDTO implements Serializable {
         this.email = email;
         this.address = address;
         this.phone = phone;
-<<<<<<< HEAD
-        this.status = status;
-
-=======
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
     }
 
     // Getters and Setters
@@ -113,8 +92,4 @@ public class CustomerDTO implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
 }

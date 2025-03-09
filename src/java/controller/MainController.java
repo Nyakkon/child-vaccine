@@ -47,8 +47,6 @@ public class MainController extends HttpServlet {
     private static final String BOOK_APPOINTMENT = "BookAppointment";
     private static final String SHOW_VACCINATION_SCHEDULE = "ShowVaccinationSchedule";
     private static final String VACCINATION_SCHEDULE_CONTROLLER = "VaccinationScheduleController";
-<<<<<<< HEAD
-=======
     private static final String ADD_VACCINE = "AddVaccine";
     private static final String ADD_VACCINE_CONTROLLER = "AddVaccineController";
     private static final String UPDATE_VACCINATION_STATUS = "UpdateVaccinationStatus";
@@ -56,7 +54,6 @@ public class MainController extends HttpServlet {
     private static final String DOCTOR_LOGIN = "DoctorLogin";
     private static final String DOCTOR_LOGIN_CONTROLLER = "DoctorLoginController";
 
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -123,8 +120,6 @@ public class MainController extends HttpServlet {
                     case SHOW_VACCINATION_SCHEDULE:
                         url = VACCINATION_SCHEDULE_CONTROLLER;
                         break;
-<<<<<<< HEAD
-=======
                     case ADD_VACCINE:
                         url = ADD_VACCINE_CONTROLLER;
                         break;
@@ -135,7 +130,6 @@ public class MainController extends HttpServlet {
                         url = DOCTOR_LOGIN_CONTROLLER;
                         break;
 
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
                     default:
                         url = DEFAULT_PAGE;
                 }

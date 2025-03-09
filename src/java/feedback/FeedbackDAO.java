@@ -56,24 +56,4 @@ public class FeedbackDAO {
         return feedbackList;
     }
 
-<<<<<<< HEAD
-    public boolean deleteFeedback(int feedbackID, String userID) throws ClassNotFoundException {
-        String sql = "DELETE FROM tblFeedback WHERE feedbackID = ? AND userID = ?";
-
-        try (Connection conn = DBUtils.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, feedbackID);
-            stmt.setString(2, userID);
-
-            int rowsDeleted = stmt.executeUpdate();
-            return rowsDeleted > 0; // Nếu xóa thành công, trả về true
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-=======
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
 }

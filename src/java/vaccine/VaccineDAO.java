@@ -389,8 +389,6 @@ public class VaccineDAO {
         }
         return notes;
     }
-<<<<<<< HEAD
-=======
     //Sửa giá vaccine trong trang admin
     public boolean updateVaccinePrice(int vaccineId, BigDecimal newPrice) throws Exception {
     Connection conn = null;
@@ -419,6 +417,5 @@ public class VaccineDAO {
     return success;
 }
 
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
 
 }

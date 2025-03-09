@@ -12,13 +12,6 @@ public class AppointmentDTO {
     private String notificationStatus;
     private String status;
     
-<<<<<<< HEAD
-    
-    // Thêm các thuộc tính cho thông tin trẻ
-    private String childName;
-    private Date dateOfBirth;
-    private String gender;
-=======
     // Thông tin trẻ
     private String childName;
     private Date dateOfBirth;
@@ -27,7 +20,6 @@ public class AppointmentDTO {
     // Thêm các trường cho thống kê chi tiết
     private int injectionCount;
     private double revenue;
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
 
     public AppointmentDTO() {
     }
@@ -45,15 +37,6 @@ public class AppointmentDTO {
     public AppointmentDTO(int appointmentID, int childID, int centerID, Date appointmentDate,
                       String serviceType, String notificationStatus, String status,
                       String childName, Date dateOfBirth, String gender) {
-<<<<<<< HEAD
-    this(appointmentID, childID, centerID, appointmentDate, serviceType, notificationStatus, status);
-    this.childName = childName;
-    this.dateOfBirth = dateOfBirth;
-    this.gender = gender;
-}
-
-    // Getters and Setters
-=======
         this(appointmentID, childID, centerID, appointmentDate, serviceType, notificationStatus, status);
         this.childName = childName;
         this.dateOfBirth = dateOfBirth;
@@ -61,7 +44,6 @@ public class AppointmentDTO {
     }
 
     // Getters and Setters cho các thuộc tính cũ
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
     public int getAppointmentID() {
         return appointmentID;
     }
@@ -117,13 +99,8 @@ public class AppointmentDTO {
     public void setStatus(String status) {
         this.status = status;
     }
-<<<<<<< HEAD
-    
-    // Getter và Setter cho các thuộc tính mới
-=======
 
     // Getters và Setters cho thông tin trẻ
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
     public String getChildName() {
         return childName;
     }
@@ -142,8 +119,6 @@ public class AppointmentDTO {
     public void setGender(String gender) {
         this.gender = gender;
     }
-<<<<<<< HEAD
-=======
     
     // --- Các phương thức mới cho thống kê chi tiết ---
     public int getInjectionCount() {
@@ -158,5 +133,4 @@ public class AppointmentDTO {
     public void setRevenue(double revenue) {
         this.revenue = revenue;
     }
->>>>>>> dc71290 (update 21:19  PM  09/03/2025)
 }
