@@ -1,3 +1,5 @@
+<%@page import="vaccine.VaccineDAO"%>
+<%@page import="vaccine.VaccineDTO"%>
 <%@page import="customer.CustomerDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="customer.CustomerDTO"%>
@@ -367,7 +369,7 @@
                     transform: translate(-50%, -50%);
                 }
             }
-              .footer {
+            .footer {
                 background: linear-gradient(135deg, #192f59 0%, #0b224d 100%);
                 color: #fff;
                 padding: 80px 0 0;
@@ -445,32 +447,518 @@
                 margin-top: 30px;
             }
             /* Nút Notify */
-.notify-button {
-    background: #ffa726;
-    color: white;
-    border: none;
-    /* Các thuộc tính CSS tương tự các nút action-button khác */
-}
+            .notify-button {
+                background: #ffa726;
+                color: white;
+                border: none;
+                /* Các thuộc tính CSS tương tự các nút action-button khác */
+            }
 
-/* Khung thông báo popup */
-.notification {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #4CAF50;
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    font-size: 16px;
-    z-index: 9999;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-}
-.notification.hide {
-    opacity: 0;
-}
+            .section {
+                background: white;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px 0;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
 
+            .section-title {
+                color: #333;
+                font-size: 1.5em;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .section-title i {
+                color: #2196F3;
+            }
+
+            .vaccine-price-container {
+                overflow-x: auto;
+            }
+
+            .vaccine-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+            }
+
+            .vaccine-table th,
+            .vaccine-table td {
+                padding: 15px;
+                text-align: left;
+                border-bottom: 1px solid #eee;
+            }
+
+            .vaccine-table th {
+                background-color: #f8f9fa;
+                font-weight: 600;
+                color: #444;
+            }
+
+            .vaccine-table tr:hover {
+                background-color: #f5f5f5;
+            }
+
+            .price-input {
+                width: 150px;
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 14px;
+                transition: border-color 0.3s;
+            }
+
+            .price-input:focus {
+                border-color: #2196F3;
+                outline: none;
+                box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+            }
+
+            .price-cell {
+                font-weight: 500;
+                color: #2196F3;
+            }
+
+            .update-btn {
+                padding: 8px 16px;
+                background: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                transition: all 0.3s ease;
+            }
+
+            .update-btn:hover {
+                background: #45a049;
+                transform: translateY(-1px);
+            }
+
+            .update-btn i {
+                font-size: 14px;
+            }
+
+            @media (max-width: 768px) {
+                .vaccine-table {
+                    font-size: 14px;
+                }
+
+                .price-input {
+                    width: 100px;
+                }
+
+                .update-btn {
+                    padding: 6px 12px;
+                }
+            }
+
+            .nav-buttons {
+                display: flex;
+                gap: 15px;
+                align-items: center;
+            }
+
+            .report-button, .logout-button {
+                padding: 8px 16px;
+                border-radius: 5px;
+                border: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+            }
+
+            .report-button {
+                background: #4CAF50;
+                color: white;
+            }
+
+            .report-button:hover {
+                background: #45a049;
+                transform: translateY(-1px);
+            }
+
+            .logout-button {
+                background: #f44336;
+                color: white;
+            }
+
+            .logout-button:hover {
+                background: #d32f2f;
+                transform: translateY(-1px);
+            }
+
+            @media (max-width: 768px) {
+                .nav-buttons {
+                    gap: 8px;
+                }
+
+                .report-button, .logout-button {
+                    padding: 6px 12px;
+                    font-size: 14px;
+                }
+            }
+
+            .section-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .add-vaccine-btn {
+                background: #2196F3;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+            }
+
+            .add-vaccine-btn:hover {
+                background: #1976D2;
+                transform: translateY(-1px);
+            }
+
+            .add-vaccine-form {
+                background: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: 500;
+                color: #333;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                width: 100%;
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 14px;
+                transition: border-color 0.3s;
+            }
+
+            .form-group input:focus,
+            .form-group textarea:focus {
+                border-color: #2196F3;
+                outline: none;
+                box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+            }
+
+            .form-actions {
+                display: flex;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            .submit-btn, .cancel-btn {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+            }
+
+            .submit-btn {
+                background: #4CAF50;
+                color: white;
+            }
+
+            .submit-btn:hover {
+                background: #45a049;
+            }
+
+            .cancel-btn {
+                background: #f44336;
+                color: white;
+            }
+
+            .cancel-btn:hover {
+                background: #d32f2f;
+            }
+
+            .add-vaccine-form {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                margin: 20px 0;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            .btn-submit {
+                background: #1e88e5;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .btn-submit:hover {
+                background: #1565c0;
+            }
+
+            .nav-button {
+                background: #2196F3;
+                color: white;
+                padding: 8px 16px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.3s ease;
+                margin-right: 10px;
+            }
+
+            .nav-button:hover {
+                background: #1976D2;
+                transform: translateY(-1px);
+            }
+
+            .nav-button.active {
+                background: #1565C0;
+            }
+
+            #usersSection, #vaccineSection {
+                margin-top: 20px;
+                background: white;
+                border-radius: 10px;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .section-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #eee;
+            }
+
+            .search-box {
+                background: transparent;
+                padding: 0;
+                box-shadow: none;
+                margin-bottom: 20px;
+            }
+
+            .search-form {
+                display: flex;
+                gap: 10px;
+            }
+
+            .search-input {
+                width: 300px;
+            }
+
+            .data-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .data-table th {
+                background: #f5f5f5;
+                padding: 12px;
+                text-align: left;
+            }
+
+            .data-table td {
+                padding: 12px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .action-buttons {
+                display: flex;
+                gap: 8px;
+            }
+
+            .action-button {
+                padding: 6px 12px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                font-size: 0.9em;
+            }
+
+            .edit-button {
+                background: #4CAF50;
+                color: white;
+            }
+
+            .delete-button {
+                background: #f44336;
+                color: white;
+            }
+
+            .notify-button {
+                background: #ff9800;
+                color: white;
+            }
+
+            /* Styles cho phần vaccine management */
+            .add-vaccine-form {
+                background: #f8f9fa;
+                padding: 20px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: 500;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            .btn-submit {
+                background: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .vaccine-table {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .price-input {
+                width: 150px;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            .update-btn {
+                background: #2196F3;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .content-section {
+                background: white;
+                border-radius: 10px;
+                padding: 20px;
+                margin-top: 20px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .nav-button.active {
+                background: #1565C0;
+                transform: translateY(-1px);
+            }
+
+            .role-badge {
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 0.85em;
+                font-weight: 500;
+            }
+
+            .role-badge.admin {
+                background: #1e88e5;
+                color: white;
+            }
+
+            .role-badge.user {
+                background: #4CAF50;
+                color: white;
+            }
+
+            select:disabled {
+                opacity: 0.7;
+                background-color: #f5f5f5 !important;
+                cursor: not-allowed;
+            }
+
+            .form-group select:disabled + label {
+                color: #666;
+            }
+
+            #displayRole {
+                background-color: #f5f5f5;
+                cursor: not-allowed;
+                color: #666;
+                border: 1px solid #ddd;
+                padding: 12px;
+                border-radius: 8px;
+                width: 100%;
+            }
+
+            .form-group input[disabled] {
+                opacity: 0.7;
+            }
         </style>
     </head>
     <body>
@@ -492,17 +980,33 @@
         %>
 
         <!-- Navbar -->
-        <nav class="navbar">
-            <div class="welcome-message">
-                <i class="fas fa-user-shield"></i>
-                Welcome, <%= loginUser.getFullName()%>
-            </div>
-            <form action="MainController" method="POST">
-                <button type="submit" name="action" value="Logout" class="logout-button">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout</button>
-            </form>
-        </nav>
+<nav class="navbar">
+    <div class="welcome-message">
+        <i class="fas fa-user-shield"></i>
+        Welcome, <%= loginUser.getFullName()%>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-button" onclick="showSection('users')">
+            <i class="fas fa-users"></i> Manage Users
+        </button>
+        <button class="nav-button" onclick="showSection('vaccines')">
+            <i class="fas fa-syringe"></i> Manage Vaccines
+        </button>
+        <!-- Nút mở trang System Overview -->
+        <button class="nav-button" onclick="window.location.href='StatisticsController'">
+            <i class="fas fa-chart-line"></i> System Overview
+        </button>
+        <button class="report-button" onclick="window.location.href = 'report.jsp'">
+            <i class="fas fa-chart-bar"></i> View Report
+        </button>
+        <form action="MainController" method="POST" style="display: inline;">
+            <button type="submit" name="action" value="Logout" class="logout-button">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </form>
+    </div>
+</nav>
+
 
         <!-- Hero Section -->
         <div class="hero-section">
@@ -512,98 +1016,173 @@
 
         <!-- Main Content -->
         <div class="main-container">
-            <!-- Search Box -->
-            <div class="search-box">
-                <form action="MainController" method="POST" class="search-form">
-                    <input type="text" 
-                           name="search" 
-                           class="search-input"
-                           value="<%= request.getParameter("search") != null ? request.getParameter("search") : ""%>"
-                           placeholder="Search users by name...">
-                    <button type="submit" name="action" value="Search" class="search-button">
-                        <i class="fas fa-search"></i>
-                        Search
-                    </button>
-                </form>
+            <!-- Users Section -->
+            <div id="usersSection" class="content-section">
+                <!-- Search Box -->
+                <div class="search-box">
+                    <form action="MainController" method="POST" class="search-form">
+                        <input type="text" 
+                               name="search" 
+                               class="search-input"
+                               value="<%= request.getParameter("search") != null ? request.getParameter("search") : ""%>"
+                               placeholder="Search users by name...">
+                        <button type="submit" name="action" value="Search" class="search-button">
+                            <i class="fas fa-search"></i>
+                            Search
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Users Table -->
+                <div class="users-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>User ID</th>
+                                <th>Full Name</th>
+                                <th>Role</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                if (list != null && !list.isEmpty()) {
+                                    int count = 1;
+                                    for (CustomerDTO user : list) {
+                            %>
+                            <tr>
+                                <td><%= count++%></td>
+                                <td><%= user.getUserID()%></td>
+                                <td><%= user.getFullName()%></td>
+                                <td>
+                                    <span class="role-badge <%= user.getRoleID().equals("AD") ? "admin" : "user"%>">
+                                        <%= user.getRoleID()%>
+                                    </span>
+                                </td>
+                                <td><%= user.getEmail()%></td>
+                                <td><%= user.getPhone()%></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="editUser.jsp?userID=<%= user.getUserID()%>" 
+                                           class="action-button edit-button">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <% if (!"AD".equals(user.getRoleID())) { %>
+                                            <a href="MainController?action=Delete&userID=<%= user.getUserID()%>" 
+                                               class="action-button delete-button"
+                                               onclick="return confirm('Are you sure you want to delete this user?')">
+                                                <i class="fas fa-trash-alt"></i> Delete
+                                            </a>
+                                            <a href="adminDashboard.jsp?userID=<%= user.getUserID()%>" 
+                                               class="action-button notify-button">
+                                                <i class="fas fa-bell"></i> Notify
+                                            </a>
+                                        <% } %>
+                                    </div>
+                                </td>
+                            </tr>
+                            <%
+                                    }
+                                } else {
+                            %>
+                            <tr>
+                                <td colspan="7" class="no-results">
+                                    <i class="fas fa-search"></i>
+                                    <p>No users found</p>
+                                    <p style="font-size: 0.9em; color: #888;">Try different search terms</p>
+                                </td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- Users Table -->
-            <div class="users-table"> <table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>User ID</th>
-                            <th>Full Name</th>
-                            <th>Role</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            if (list != null && !list.isEmpty()) {
-                                int count = 1;
-                                for (CustomerDTO user : list) {
-                        %>
-                        <tr>
-                            <td><%= count++%></td>
-                            <td><%= user.getUserID()%></td>
-                            <td><%= user.getFullName()%></td>
-                            <td>
-                                <span class="role-badge <%= user.getRoleID().equals("AD") ? "admin" : "user"%>">
-                                    <%= user.getRoleID()%>
-                                </span>
-                            </td>
-                            <td><%= user.getEmail()%></td>
-                            <td><%= user.getPhone()%></td>
-                            <td> <div class="action-buttons">
-                                    <a href="editUser.jsp?userID=<%= user.getUserID()%>" 
-                                       class="action-button edit-button">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                    <a href="MainController?action=Delete&userID=<%= user.getUserID()%>" 
-                                       class="action-button delete-button">
-                                        <i class="fas fa-trash-alt"></i> Delete
-                                    </a>
-                                    <!-- Thêm nút Notify: khi nhấn sẽ chuyển đến cùng trang adminDashboard.jsp kèm theo notifyUserID -->
-        <a href="adminDashboard.jsp?notifyUserID=<%= user.getUserID()%>" class="action-button notify-button">
-            <i class="fas fa-bell"></i> Notify
-        </a>   
-                                    
-                                </div>
-                            </td>
-                        </tr>
-                        <%
-                            }
-                        } else {
-                        %>
-                        <tr>
-                            <td colspan="7" class="no-results">
-                                <i class="fas fa-search"></i>
-                                <p>No users found</p>
-                                <p style="font-size: 0.9em; color: #888;">Try different search terms</p>
-                            </td>
-                        </tr>
-                        <%
-                            }
-                        %>
-                    </tbody>
-                </table>
+            <!-- Vaccines Section -->
+            <div id="vaccineSection" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-syringe"></i>
+                        Manage Vaccine
+                    </h2>
+                </div>
+
+                <div class="add-vaccine-form">
+                    <h2>Thêm Vaccine Mới</h2>
+                    <form action="MainController" method="POST">
+                        <div class="form-group">
+                            <label for="vaccineName">Tên Vaccine:</label>
+                            <input type="text" id="vaccineName" name="vaccineName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Mô tả:</label>
+                            <textarea id="description" name="description" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price">Giá:</label>
+                            <input type="number" id="price" name="price" min="0" step="1000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recommendedAge">Độ tuổi khuyến nghị:</label>
+                            <input type="text" id="recommendedAge" name="recommendedAge" required>
+                        </div>
+
+                        <input type="hidden" name="action" value="AddVaccine">
+                        <button type="submit" class="btn-submit">Thêm Vaccine</button>
+                    </form>
+                </div>
+
+                <div class="vaccine-price-container">
+                    <table class="vaccine-table">
+                        <thead>
+                            <tr>
+                                <th>Tên Vaccine</th>
+                                <th>Mô tả</th>
+                                <th>Giá hiện tại</th>
+                                <th>Giá mới</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                                VaccineDAO vaccineDAO = new VaccineDAO();
+                                List<VaccineDTO> vaccines = vaccineDAO.getAllVaccines();
+                                for (VaccineDTO vaccine : vaccines) {
+                            %>
+                            <tr>
+                                <td><%= vaccine.getVaccineName()%></td>
+                                <td><%= vaccine.getDescription()%></td>
+                                <td class="price-cell"><%= vaccine.getPrice()%> VND</td>
+                                <td>
+                                    <input type="number" 
+                                           min="0" 
+                                           step="1000" 
+                                           class="price-input" 
+                                           id="price_<%= vaccine.getVaccineID()%>"
+                                           placeholder="Nhập giá mới">
+                                </td>
+                                <td>
+                                    <button onclick="updatePrice('<%= vaccine.getVaccineID()%>')" 
+                                            class="update-btn">
+                                        <i class="fas fa-check"></i> Cập nhật
+                                    </button>
+                                </td>
+                            </tr>
+                            <% }%>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-<%--       
-        <!-- Modal for Appointment Selection (Record Reaction) -->
-    <div id="appointmentModal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeAppointmentModal()">&times;</span>
-            <h3>Chọn lịch hẹn</h3>
-            <div id="appointmentList" class="appointment-list">
-                <!-- Danh sách lịch hẹn sẽ được load qua AJAX từ GetAppointmentsByChildIDController -->
-            </div>
-        </div>
-    </div>
---%>
+
         <!-- Delete Confirmation Modal -->  
         <div id="deleteModal" class="modal-overlay">
             <div class="modal-container">
@@ -632,6 +1211,8 @@
                 <div class="error-message"></div>
                 <form id="editForm" class="edit-form">
                     <input type="hidden" id="editUserID" name="userID">
+                    <input type="hidden" id="editRole" name="roleID">
+                    
                     <div class="form-group">
                         <label for="editFullName">Full Name</label>
                         <input type="text" id="editFullName" name="fullName" required>
@@ -645,11 +1226,8 @@
                         <input type="tel" id="editPhone" name="phone" required>
                     </div>
                     <div class="form-group">
-                        <label for="editRole">Role</label>
-                        <select id="editRole" name="roleID" required>
-                            <option value="US">User</option>
-                            <option value="AD">Admin</option>
-                        </select>
+                        <label>Role</label>
+                        <input type="text" id="displayRole" disabled>
                     </div>
                     <div class="edit-buttons">
                         <button type="button" class="modal-button cancel-button" onclick="closeEditModal()">
@@ -661,12 +1239,6 @@
                     </div>
                 </form>
             </div>
-            
-          
-        </div>
-
-        <div class="report-container">
-            <a href="report.jsp" class="report-link">📊 View Report</a>
         </div>
 
         <footer class="footer">
@@ -711,6 +1283,11 @@
                 document.getElementById('editEmail').value = email;
                 document.getElementById('editPhone').value = phone;
                 document.getElementById('editRole').value = roleID;
+                
+                // Hiển thị role trong trường input disabled
+                const displayRole = document.getElementById('displayRole');
+                displayRole.value = roleID === 'AD' ? 'Admin' : 'User';
+                
                 document.getElementById('editModal').style.display = 'block';
                 document.body.style.overflow = 'hidden';
             }
@@ -725,7 +1302,7 @@
             document.getElementById('editForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
-                
+
                 fetch('UpdateController', {
                     method: 'POST',
                     body: new URLSearchParams(formData)
@@ -766,22 +1343,21 @@
                 };
             });
 
-    
             // Existing delete functionality
-            document.getElementById('cancelDelete').addEventListener('click', function() {
+            document.getElementById('cancelDelete').addEventListener('click', function () {
                 document.getElementById('deleteModal').style.display = 'none';
                 document.body.style.overflow = 'auto';
                 userIdToDelete = null;
             });
 
-            document.getElementById('confirmDelete').addEventListener('click', function() {
+            document.getElementById('confirmDelete').addEventListener('click', function () {
                 if (userIdToDelete) {
                     window.location.href = 'MainController?action=Delete&userID=' + userIdToDelete;
                 }
             });
 
             document.querySelectorAll('.delete-button').forEach(button => {
-                button.onclick = function(e) {
+                button.onclick = function (e) {
                     e.preventDefault();
                     const userId = this.getAttribute('href').split('userID=')[1];
                     showDeleteConfirmation(userId);
@@ -789,39 +1365,87 @@
             });
 
             // Close modal when clicking outside
-            window.onclick = function(event) {
+            window.onclick = function (event) {
                 if (event.target.classList.contains('modal-overlay')) {
                     event.target.style.display = 'none';
                     document.body.style.overflow = 'auto';
                 }
             };
-            
+
+            function updatePrice(vaccineId) {
+                var newPrice = document.getElementById('price_' + vaccineId).value;
+                if (newPrice && newPrice > 0) {
+                    var form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = 'AdminController';
+
+                    var actionInput = document.createElement('input');
+                    actionInput.type = 'hidden';
+                    actionInput.name = 'action';
+                    actionInput.value = 'updatePrice';
+
+                    var idInput = document.createElement('input');
+                    idInput.type = 'hidden';
+                    idInput.name = 'vaccineId';
+                    idInput.value = vaccineId;
+
+                    var priceInput = document.createElement('input');
+                    priceInput.type = 'hidden';
+                    priceInput.name = 'newPrice';
+                    priceInput.value = newPrice;
+
+                    form.appendChild(actionInput);
+                    form.appendChild(idInput);
+                    form.appendChild(priceInput);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                } else {
+                    alert('Vui lòng nhập giá hợp lệ!');
+                }
+            }
+
+            function openAddVaccineForm() {
+                document.getElementById('addVaccineForm').style.display = 'block';
+            }
+
+            function closeAddVaccineForm() {
+                document.getElementById('addVaccineForm').style.display = 'none';
+            }
+
+            function showSection(section) {
+                // Ẩn tất cả các section
+                document.getElementById('usersSection').style.display = 'none';
+                document.getElementById('vaccineSection').style.display = 'none';
+                
+                // Lấy các phần tử header
+                const dashboardTitle = document.querySelector('.dashboard-title');
+                const dashboardSubtitle = document.querySelector('.dashboard-subtitle');
+                
+                // Cập nhật tiêu đề và subtitle dựa trên section
+                if (section === 'users') {
+                    document.getElementById('usersSection').style.display = 'block';
+                    dashboardTitle.textContent = 'Admin Dashboard';
+                    dashboardSubtitle.textContent = 'Manage users and system settings';
+                } else if (section === 'vaccines') {
+                    document.getElementById('vaccineSection').style.display = 'block';
+                    dashboardTitle.textContent = 'Vaccine Dashboard';
+                    dashboardSubtitle.textContent = 'Manage vaccines and pricing';
+                }
+                
+                // Cập nhật trạng thái active của nút
+                document.querySelectorAll('.nav-button').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent.includes(section === 'users' ? 'Users' : 'Vaccines')) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            // Khi trang load, mặc định hiển thị phần users
+            window.onload = function() {
+                showSection('users');
+            };
         </script>
-        
-        <script>
-    // Hàm tạo popup notification và tự ẩn sau 3 giây
-    function showNotification(message) {
-        var notification = document.createElement("div");
-        notification.innerText = message;
-        notification.classList.add("notification");
-        document.body.appendChild(notification);
-        setTimeout(function() {
-            notification.classList.add("hide");
-            setTimeout(() => notification.remove(), 500);
-        }, 3000);
-    }
-
-    // Kiểm tra query param "success" trên URL, nếu có thì hiển thị notification
-    window.addEventListener("DOMContentLoaded", function() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var msg = urlParams.get("success");
-        if (msg) {
-            showNotification(decodeURIComponent(msg));
-            // Xoá tham số trên URL để tránh lặp lại thông báo khi refresh
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-    });
-</script>
-
     </body>
 </html>
